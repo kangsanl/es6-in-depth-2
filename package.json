@@ -1,0 +1,43 @@
+{
+  "name": "es6-in-depth",
+  "version": "0.0.1",
+  "description": "Tests to accompany sessions",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-jest": "*",
+    "jest-cli": "*"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
+    "setupEnvScriptFile": "<rootDir>/jestEnv.js",
+    "testFileExtensions": [
+      "js"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json"
+    ],
+    "testDirectoryName": "spec-final",
+    "unmockedModulePathPatterns": ["core-js/.*"]
+  },
+  "dependencies": {
+    "lodash": "^3.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tdoherty/es6-in-depth-1.git"
+  },
+  "keywords": [
+    "ES6",
+    "JavaScript"
+  ],
+  "author": "Tim Doherty",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tdoherty/es6-in-depth-1/issues"
+  },
+  "homepage": "https://github.com/tdoherty/es6-in-depth-1"
+}
