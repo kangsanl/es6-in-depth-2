@@ -1,30 +1,82 @@
 
 describe('iterators', () => {
 
+  it('should iterate an array', () => {
+
+    let arr = [1, 2, 3, 4];
+    let vals = [];
+
+    // use ES6 iterator to make the test pass
+
+    for (let val of arr) {
+      vals.push(val);
+    }
+
+    expect(vals).toEqual([1, 2, 3, 4]);
+  });
+
+  it('should iterate a string', () => {
+
+    let myStr = 'Hello World';
+    let chrs = [];
+
+    // use ES6 iterator to make the test pass
+
+    for (let chr of myStr) {
+      chrs.push(chr);
+    }
+
+    expect(chrs).toEqual(['H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd']);
+  });
+
+  it('should produce a fibonacci sequence', () => {
+
+    // implement an iterator on fibonacci to makes the test pass
+    let fibonacci = {
+      prev: 0,
+      curr: 1,
+      swap: null,
+      [Symbol.iterator]() {
+        return this;
+      },
+      next() {
+        this.swap = this.prev;
+        this.prev = this.curr;
+        this.curr = this.swap + this.curr;
+        return { value: this.swap, done: false };
+      }
+    };
+
+    let result = [];
+    for (let n of fibonacci[Symbol.iterator]()) {
+      if (n > 13) {
+        break;
+      }
+      result.push(n);
+    }
+
+    expect(result).toEqual([0, 1, 1, 2, 3, 5, 8, 13]);
+  });
+
   it('should create a custom iterator', () => {
 
-    let orcs = ['Azog', 'Gorbag', 'Ugluk'];
+    // write an iterator for mordor.orcs to make the tests pass
 
     let mordor = {
+      index: 0,
 
-      location: 'Middle Earth',
-      chiefExecutiveOfficer: 'Sauron',
-      vicePresident: 'Saruman',
+      orcs: ['Azog', 'Gorbag', 'Ugluk'],
+
       [Symbol.iterator]() {
-        let index = 0;
-
-        let iterator = {
-          next() {
-            if (index < orcs.length) {
-              let isDone = index === orcs.length - 1;
-              let ret= { value: orcs[index], done: isDone };
-              index++;
-              return ret;
-            }
-          }
-        };
-
-        return iterator;
+        return this;
+      },
+      next() {
+        if (this.index < this.orcs.length) {
+          let isDone = this.index === this.orcs.length - 1;
+          let ret= { value: this.orcs[this.index], done: isDone };
+          this.index++;
+          return ret;
+        }
       }
     };
 
@@ -37,7 +89,7 @@ describe('iterators', () => {
 
   it('creates a combinator by combining iterators', () => {
 
-    // write a combinator function 'take' iterates over n elements of an iterator
+    // write a combinator function 'take' that iterates over n elements of an iterator
 
     function take(n, iterable) {
       let iterator = iterable[Symbol.iterator]();

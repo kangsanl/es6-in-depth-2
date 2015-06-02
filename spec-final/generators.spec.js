@@ -3,6 +3,8 @@ describe('generators', () => {
 
   it('produces a simple array', () => {
 
+    // write a generator arrayGenerator to make the test pass
+
     function* arrayGenerator() {
       yield 1;
       yield 2;
@@ -15,6 +17,8 @@ describe('generators', () => {
   });
 
   it('produces a fibonacci sequence', () => {
+
+    // write a generator "fibonacci to make the test pass
 
     // solution 1
     function* fibonacci() {
@@ -33,7 +37,7 @@ describe('generators', () => {
       }
     }
 
-    // solution 2 with array destructuring
+    // solution 2 with array destructuring - extra credit
     //function* fibonacci() {
     //  let [prev, curr] = [0, 1];
     //  yield prev;
@@ -55,4 +59,6 @@ describe('generators', () => {
 
     expect(fibArray).toEqual([0, 1, 1, 2, 3, 5, 8, 13]);
   });
+
+  // TODO recursive yield*
 });
