@@ -112,4 +112,42 @@ describe('object.is', () => {
 
     expect(isSame).toBe(false);
   });
+
+  //TODO getOwnPropertySymbols
+
+  it('sets the prototype of an object - syntax 1', () => {
+    let obj1 = {
+      foo() {
+        return 'bar';
+      }
+    };
+
+    let obj2 = {};
+
+    // use new Object methods to establish a prototype relationship from obj2 to obj1
+
+    Object.setPrototypeOf(obj2, obj1);
+
+    expect(obj2.foo).toBeDefined();
+    expect(obj2.foo()).toBe('bar');
+  });
+
+  it('sets the prototype of an object - syntax 2', () => {
+    let obj1 = {
+      foo() {
+        return 'bar';
+      }
+    };
+
+    // use new Object methods to establish a prototype relationship from obj2 to obj1
+
+    let obj2 = Object.setPrototypeOf({
+
+      // obj2 definition here
+
+    }, obj1);
+
+    expect(obj2.foo).toBeDefined();
+    expect(obj2.foo()).toBe('bar');
+  });
 });

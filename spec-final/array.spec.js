@@ -61,7 +61,7 @@ describe('array', () => {
   //array.of
   it('should create an array from a variable number and type of arguments', () => {
 
-    // constrast with array constructor when a single number arg is passed
+    // contrast with array constructor when a single number arg is passed
     let arr = Array.of(1);
 
     expect(arr).toEqual([1]);
@@ -135,7 +135,16 @@ describe('array', () => {
     expect(getEntries([1, 2, 3])).toEqual([ [0, 1], [1, 2], [2,3] ]);
   });
 
+  // Extra Credit
+  it('gets an array\'s values using the iterator symbol', () => {
 
+    let arr = [1, 2, 3];
 
-  //Array.prototype[@@iterator]()
+    // implement a function getValuesByIterator that returns an array's values via the iterator symbol, as an array
+    function getValuesByIterator(arr) {
+      return [...arr[Symbol.iterator]()];
+    }
+
+    expect(getValuesByIterator(arr)).toEqual([1, 2, 3]);
+  });
 });
