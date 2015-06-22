@@ -2,19 +2,18 @@
 
 describe('object', () => {
 
-  it('clones an object', () => {
+  xit('clones an object', () => {
     let obj = {
       foo: 'bar'
     };
 
     // use ES6 object methods to make the test pass
-
-    let copy = Object.assign({}, obj);
+    let copy;
 
     expect(copy).toEqual(obj);
   });
 
-  it('extends an object', () => {
+  xit('extends an object', () => {
     let obj1 = {
       foo: 'bar'
     };
@@ -25,28 +24,18 @@ describe('object', () => {
 
     // use ES6 object methods to make the test pass
 
-    Object.assign(obj1, obj2);
-
     expect(obj1.bar).toBeDefined();
     expect(obj1.bar).toBe('baz');
   });
 
-  it('cannot copy inherited and non-enumerable properties', () => {
+  xit('cannot copy inherited and non-enumerable properties', () => {
 
     // create an object 'obj' with three properties:
     // 1 - foo: an inherited property
     // 2 - bar: a non-enumerable property
     // 3 - baz: an enumerable property
 
-    let obj = Object.create({ foo: 'bar' }, { // foo is an inherit property
-      bar: {
-        value: 'baz' // non-enumerable
-      },
-      baz: {
-        value: 'bim',
-        enumerable: true
-      }
-    });
+    let obj;
 
     let clone = Object.assign({}, obj);
 
@@ -57,7 +46,7 @@ describe('object', () => {
 
   });
 
-  it('copies an accessor\'s value', () => {
+  xit('copies an accessor\'s value', () => {
 
     // clone an object with a getter
 
@@ -74,7 +63,7 @@ describe('object', () => {
     expect(clone).toEqual({ foo: 'bar', baz: 'bim' });
   });
 
-  it('clones an object with its prototype', () => {
+  xit('clones an object with its prototype', () => {
 
     let obj1 = Object.create({
       bar: 'baz'
@@ -85,41 +74,35 @@ describe('object', () => {
 
     // modify the code below to make the test pass
 
-    let o1Proto = Object.getPrototypeOf(obj1);
-    let obj2 = Object.assign(
-      Object.create(o1Proto),
-      obj1
-    );
-
-    //let obj2 = Object.assign({}, obj1);
+    let obj2 = Object.assign({}, obj1);
 
     expect(obj2.foo).toBe('bar');
     expect(obj2.bar).toBe('baz');
   });
 
-  it('checks equality of NaN', () => {
+  xit('checks equality of NaN', () => {
 
     // use ES6 object methods to make the test pass
 
     function isNaNSame() {
-      return Object.is(NaN, NaN);
+      return NaN === NaN;
     }
 
     expect(isNaNSame()).toBe(true);
   });
 
-  it('checks equality of 0 and -0', () => {
+  xit('checks equality of 0 and -0', () => {
 
     // use ES6 object methods to make the test pass
 
     function isZeroSame() {
-      return Object.is(0, -0);
+      return 0 === -0;
     }
 
     expect(isZeroSame()).toBe(false);
   });
 
-  it('sets the prototype of an object - syntax 1', () => {
+  xit('sets the prototype of an object - syntax 1', () => {
     let obj1 = {
       foo() {
         return 'bar';
@@ -129,15 +112,6 @@ describe('object', () => {
     let obj2 = {};
 
     // use new Object methods to establish a prototype relationship from obj2 to obj1
-
-    Object.setPrototypeOf(obj2, obj1);
-
-    // syntax #2
-    //let obj2 = Object.setPrototypeOf({
-    //
-    //  // obj2 definition here
-    //
-    //}, obj1);
 
     expect(Object.getPrototypeOf(obj2)).toBe(obj1);
     expect(obj2.foo).toBeDefined();

@@ -4,25 +4,36 @@ describe('iterators', () => {
   it('should iterate an array', () => {
 
     let arr = [1, 2, 3, 4];
-    let vals = [];
 
-    // use ES6 iterator to make the test pass
+    // implement iterateArray to make the test pass
 
-    for (let val of arr) {
-      vals.push(val);
+    function iterateArray(arr) {
+      let vals = [];
+      let iter = arr[Symbol.iterator]();
+      let next = iter.next();
+
+      while(!next.done) {
+        vals.push(next);
+        next = iter.next();
+      }
+
+      return vals;
     }
 
-    expect(vals).toEqual([1, 2, 3, 4]);
+    expect(iterateArray(arr)).toEqual([
+      { value: 1, done: false },
+      { value: 2, done: false },
+      { value: 3, done: false },
+      { value: 4, done: false }
+    ]);
   });
 
   it('should iterate a string', () => {
 
-    let myStr = 'Hello';
-
-    // use ES6 iterator to make the test pass
+    // implement stringIterator() to make the test pass
     function stringIterator(str) {
       let chrs = [];
-      for (let chr of myStr) {
+      for (let chr of str) {
         chrs.push(chr);
       }
       return chrs;
@@ -31,9 +42,8 @@ describe('iterators', () => {
       //return [...str]
     }
 
-    // implement stringIterator() to make the test pass
 
-    expect(stringIterator(myStr)).toEqual(['H', 'e', 'l', 'l', 'o']);
+    expect(stringIterator('Hello')).toEqual(['H', 'e', 'l', 'l', 'o']);
   });
 
   it('should create a custom iterator', () => {
@@ -60,7 +70,7 @@ describe('iterators', () => {
       }
     };
 
-    // implement [Symbol.iterator]() on object morder to make the test pass
+    // implement [Symbol.iterator]() on object mordor to make the test pass
 
     let orcIterator = mordor[Symbol.iterator]();
 
@@ -72,7 +82,8 @@ describe('iterators', () => {
 
   it('should produce a fibonacci sequence', () => {
 
-    // implement an iterator on fibonacci to makes the test pass
+    // implement the fibonacci object to makes the test pass
+
     let fibonacci = {
       prev: 0,
       curr: 1,
@@ -104,7 +115,7 @@ describe('iterators', () => {
 
   it('creates a combinator by combining iterators', () => {
 
-    // write a combinator function 'take' that iterates over the first n elements of an iterator
+    // write a combinator function 'take' that returns an iterator for the first n elements of an iterator argument
 
     function take(n, iterable) {
       let iterator = iterable[Symbol.iterator]();
@@ -131,7 +142,8 @@ describe('iterators', () => {
 
   it('creates a functional filter chain', () => {
 
-    // write two functions that return iterators, byDept and bySalary cap, to pass the tests
+    // write two functions that return iterators, byDept and bySalary cap, to pass the test
+
     function byDept(dept, iterable) {
       let iterator = iterable[Symbol.iterator]();
 

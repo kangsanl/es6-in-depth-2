@@ -20,7 +20,7 @@
       "js",
       "json"
     ],
-    "testDirectoryName": "spec-final",
+    "testDirectoryName": "spec-empty",
     "unmockedModulePathPatterns": ["core-js/.*"]
   },
   "dependencies": {
