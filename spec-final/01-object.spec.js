@@ -79,6 +79,26 @@ describe('object.assign', () => {
     expect(clone).toEqual({ foo: 'bar', baz: 'bim' });
   });
 
+  it('clones an object with its prototype', () => {
+    let obj1 = Object.create({
+      bar: 'baz'
+    });
+
+    obj1.foo = 'bar';
+    expect(obj1.bar).toBe('baz');
+
+    // modify the code below to make the test pass
+    //let o1Proto = Object.getPrototypeOf(obj1);
+    //let obj2 = Object.assign(
+    //  Object.create(o1Proto),
+    //  obj1
+    //);
+
+    let obj2 = Object.assign({}, obj1);
+
+    expect(obj2.bar).toBe('baz');
+  });
+
   it('interrupts copy on exception', () => {
 
     let obj = Object.defineProperty({}, 'foo', {

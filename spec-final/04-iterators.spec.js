@@ -17,16 +17,57 @@ describe('iterators', () => {
 
   it('should iterate a string', () => {
 
-    let myStr = 'Hello World';
-    let chrs = [];
+    let myStr = 'Hello';
 
     // use ES6 iterator to make the test pass
+    function stringIterator(str) {
+      let chrs = [];
+      for (let chr of myStr) {
+        chrs.push(chr);
+      }
+      return chrs;
 
-    for (let chr of myStr) {
-      chrs.push(chr);
+      // xtra credit for the spread operator
+      //return [...str]
     }
 
-    expect(chrs).toEqual(['H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd']);
+    // implement stringIterator() to make the test pass
+
+    expect(stringIterator(myStr)).toEqual(['H', 'e', 'l', 'l', 'o']);
+  });
+
+  it('should create a custom iterator', () => {
+
+    // write an iterator for mordor.orcs to make the tests pass
+
+    let mordor = {
+      index: 0,
+
+      orcs: ['Azog', 'Gorbag', 'Ugluk'],
+
+      [Symbol.iterator]() {
+        return this;
+      },
+      next() {
+        let ret= { value: undefined, done: true };
+
+        if (this.index < this.orcs.length) {
+          ret.value = this.orcs[this.index];
+          ret.done = false;
+          this.index++;
+        }
+        return ret;
+      }
+    };
+
+    // implement [Symbol.iterator]() on object morder to make the test pass
+
+    let orcIterator = mordor[Symbol.iterator]();
+
+    expect(orcIterator.next()).toEqual({value: 'Azog', done: false});
+    expect(orcIterator.next()).toEqual({value: 'Gorbag', done: false});
+    expect(orcIterator.next()).toEqual({value: 'Ugluk', done: false});
+    expect(orcIterator.next()).toEqual({value: undefined, done: true});
   });
 
   it('should produce a fibonacci sequence', () => {
@@ -47,49 +88,23 @@ describe('iterators', () => {
       }
     };
 
-    let result = [];
-    for (let n of fibonacci[Symbol.iterator]()) {
-      if (n > 13) {
-        break;
+    function fibonacciIterator() {
+      let result = [];
+      for (let n of fibonacci) {
+        if (n > 13) {
+          break;
+        }
+        result.push(n);
       }
-      result.push(n);
+      return result;
     }
 
-    expect(result).toEqual([0, 1, 1, 2, 3, 5, 8, 13]);
-  });
-
-  it('should create a custom iterator', () => {
-
-    // write an iterator for mordor.orcs to make the tests pass
-
-    let mordor = {
-      index: 0,
-
-      orcs: ['Azog', 'Gorbag', 'Ugluk'],
-
-      [Symbol.iterator]() {
-        return this;
-      },
-      next() {
-        if (this.index < this.orcs.length) {
-          let isDone = this.index === this.orcs.length - 1;
-          let ret= { value: this.orcs[this.index], done: isDone };
-          this.index++;
-          return ret;
-        }
-      }
-    };
-
-    let orcIterator = mordor[Symbol.iterator]();
-
-    expect(orcIterator.next()).toEqual({value: 'Azog', done: false});
-    expect(orcIterator.next()).toEqual({value: 'Gorbag', done: false});
-    expect(orcIterator.next()).toEqual({value: 'Ugluk', done: true});
+    expect(fibonacciIterator()).toEqual([0, 1, 1, 2, 3, 5, 8, 13]);
   });
 
   it('creates a combinator by combining iterators', () => {
 
-    // write a combinator function 'take' that iterates over n elements of an iterator
+    // write a combinator function 'take' that iterates over the first n elements of an iterator
 
     function take(n, iterable) {
       let iterator = iterable[Symbol.iterator]();
@@ -111,16 +126,7 @@ describe('iterators', () => {
     }
 
     let arr = ['a', 'b', 'c', 'd', 'e'];
-    let result = [];
-
-    for(let x of take(3, arr)) {
-      result.push(x);
-    }
-
-    // extra credit, use the spread operator for same result?
-    //let result = [...take(3, arr)];
-
-    expect(result).toEqual(['a', 'b', 'c']);
+    expect([...take(3, arr)]).toEqual(['a', 'b', 'c']);
   });
 
   it('creates a functional filter chain', () => {
